@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 
 class CharacterController extends Controller
 {
-    // Get all characters
+    // Return all characters in the database
     public function index()
     {
         return response()->json(Character::all(), 200);
     }
 
-    // Get single character by ID
+    // Return a single character by ID, or 404 if not found
     public function show($id)
     {
         $character = Character::find($id);
@@ -25,7 +25,7 @@ class CharacterController extends Controller
         return response()->json($character, 200);
     }
 
-    // Create new character
+    // Create a new character with validated data
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -43,7 +43,7 @@ class CharacterController extends Controller
         return response()->json($character, 201);
     }
 
-    // Update existing character
+    // Update an existing character, or return 404 if not found
     public function update(Request $request, $id)
     {
         $character = Character::find($id);
@@ -67,7 +67,7 @@ class CharacterController extends Controller
         return response()->json($character, 200);
     }
 
-    // Delete character
+    // Delete a character by ID, or return 404 if not found
     public function destroy($id)
     {
         $character = Character::find($id);

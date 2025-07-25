@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Character;  // Import Character model
+use App\Models\Character;
 
 class User extends Authenticatable
 {
@@ -31,7 +31,7 @@ class User extends Authenticatable
         ];
     }
 
-    // Add favorites relationship
+    // Many-to-many relationship: user can favorite many characters
     public function favorites()
     {
         return $this->belongsToMany(Character::class, 'favorites');

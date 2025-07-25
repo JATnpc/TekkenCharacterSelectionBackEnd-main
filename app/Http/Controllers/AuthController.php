@@ -9,7 +9,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    // Register
+    // Handle user registration and return user with API token
     public function register(Request $request)
     {
         $fields = $request->validate([
@@ -32,7 +32,7 @@ class AuthController extends Controller
         ], 201);
     }
 
-    // Login
+    // Authenticate user and return token if credentials are valid
     public function login(Request $request)
     {
         $fields = $request->validate([
@@ -42,6 +42,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $fields['email'])->first();
 
+        // Check credentials
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
@@ -56,7 +57,7 @@ class AuthController extends Controller
         ]);
     }
 
-    // Logout
+    // Invalidate the current user's token (logout)
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
